@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Dmitry Pulsha](https://up.htmlacademy.ru/javascript/23/user/1599147).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рожков](https://up.htmlacademy.ru/javascript/23/user/1069033).
 
 ---
 

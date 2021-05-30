@@ -17,7 +17,7 @@ function getRandomPositiveFloat(min, max, decimalPlaces) {
   const multiplieRate = Math.pow(10, decimalPlaces);
   min = Math.ceil(min *= multiplieRate);
   max = Math.floor(max *= multiplieRate);
-  return ((Math.floor(min + Math.random() * (max + 1 - min))) / multiplieRate).toFixed(decimalPlaces);
+  return +((Math.floor(min + Math.random() * (max + 1 - min))) / multiplieRate).toFixed(decimalPlaces);
 }
 
 getRandomPositiveInt(1, 142);

@@ -24,6 +24,6 @@ getRandomPositiveInt(1, 142);
 getRandomPositiveFloat(1.0356078560918, 3.1356078560918, 7);
 
 //при совпадении чисел и если числа длинее количества знаков для округления, то мы вылетаем за диапазон. как ни крути.
-//console.log(getPositiveRandomFloat(1.0356078560918, 1.0356078560918, 7));
+//console.log(getRandomPositiveFloat(1.0356078560918, 1.0356078560918, 7));
 
 

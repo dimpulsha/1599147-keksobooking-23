@@ -46,6 +46,6 @@ function createTestPlace(index) {
   };
 }
 
-const getTestData = (TEST_OBJECT_NUM) => new Array(TEST_OBJECT_NUM).fill(null).map((value, index) => createTestPlace(index));
+const getTestData = (objectNum) => new Array(objectNum).fill(null).map((value, index) => createTestPlace(index));
 
 export { getTestData };

@@ -3,7 +3,6 @@ import { getRandomPositiveFloat } from './utils-function.js';
 import { getRandomListValue } from './utils-function.js';
 import { createRandomNoUnicList } from './utils-function.js';
 import { createRandomUnicList } from './utils-function.js';
-
 import { getPlaceTypeList } from './test-data-settings.js';
 import { getPlaceFeatureList } from './test-data-settings.js';
 import { getCheckInTime } from './test-data-settings.js';
@@ -26,6 +25,7 @@ function createTestPlace(index) {
     author: {
       avatar: `img/avatars/user0${(index + 1)}.png`,
     },
+
     offer: {
       title: getRandomListValue(getOfferTitleList()),
       address: `${testLocation.lat}, ${testLocation.lng}`,
@@ -39,6 +39,7 @@ function createTestPlace(index) {
       description: getRandomListValue(getOfferDescriptionList()),
       photos: createRandomNoUnicList(getPhotoTestList(), getRandomInt(0, 5)),
     },
+
     location: {
       lat: testLocation.lat,
       lng: testLocation.lng,

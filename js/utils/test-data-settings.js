@@ -1,11 +1,3 @@
-// const PLACE_TYPE_LIST = [
-//   'bungalow',
-//   'flat',
-//   'house',
-//   'hotel',
-//   'palace',
-// ];
-
 const PLACE_TYPE_LIST = [
   {
     NAME: 'bungalow',
@@ -126,11 +118,5 @@ const getPhotoTestList = () => PHOTO_TEST_LIST;
 const getOfferTitleList = () => OFFER_TITLE_LIST;
 const getOfferDescriptionList = () => OFFER_DESCRIPTION_LIST;
 const getGeoPont = () => GEO_POINT;
-export { getPlaceTypeList };
-export { getPlaceFeatureList };
-export { getCheckInTime };
-export { getCheckOutTime };
-export { getPhotoTestList };
-export { getOfferTitleList };
-export { getOfferDescriptionList };
-export { getGeoPont };
+
+export { getPlaceTypeList, getPlaceFeatureList, getCheckInTime, getCheckOutTime, getPhotoTestList, getOfferTitleList, getOfferDescriptionList, getGeoPont };

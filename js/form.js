@@ -4,9 +4,6 @@ const mapFilterElement = mapFilter.querySelectorAll('.map__filter, .map__feature
 const advertisementForm = document.querySelector('.ad-form');
 const advertisementFormElement = advertisementForm.querySelectorAll('.ad-form-header, .ad-form__element');
 
-//console.log(advertisementFormElement);
-//ad-form__element ad-form-header
-
 const disableMapFilter = function () {
   mapFilter.classList.add('map__filters--disabled');
   mapFilterElement.forEach((element) => { element.setAttribute('disabled', ''); });

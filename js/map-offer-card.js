@@ -7,28 +7,45 @@ const PLACE_LIST = {
   hotel: 'Отель',
 };
 
+const ONE_ROOM_TEXT = 'комната';
+const PLURAL_ROOM_TEXT = 'комнаты';
+const MORE_ROOM_TEXT = 'комнат';
+const UNKNOWN_ROOM_TEXT = 'Число комнат не указано';
+
+const ONE_GUEST_TEXT = 'гостя';
+const PLURAL_GUEST_TEXT = 'гостей';
+const TOO_MUCH_GUEST_TEXT = 'не для гостей';
+const NUM_GUESTS_UNKNOWN = 0;
+const NUM_GUESTS_MAX_LIMIT = 100;
+
 const PRICE_SUFFIX = '<span>₽/ночь</span>';
 const popupCardTemplate = document.querySelector('#card').content;
 const popupCard = popupCardTemplate.querySelector('.popup');
 
 const createRoomNumDescription = function (numRoom) {
-
-  let roomText = 'комнаты';
-
-  if (numRoom === 1) { roomText = ' комната'; }
-  if (numRoom === 0) { return 'Число комнат не указано'; }
-
-  return `${numRoom} ${roomText}`;
+  switch (numRoom) {
+    case 0: return `${numRoom} ${UNKNOWN_ROOM_TEXT}`;
+    case 11: return `${numRoom} ${MORE_ROOM_TEXT}`;
+    case 12: return `${numRoom} ${MORE_ROOM_TEXT}`;
+    case 13: return `${numRoom} ${MORE_ROOM_TEXT}`;
+  }
+  const textSwich = numRoom % 10;
+  switch (textSwich) {
+    case 1: return `${numRoom} ${ONE_ROOM_TEXT}`;
+    case 2: return `${numRoom} ${PLURAL_ROOM_TEXT}`;
+    case 3: return `${numRoom} ${PLURAL_ROOM_TEXT}`;
+    case 4: return `${numRoom} ${PLURAL_ROOM_TEXT}`;
+    default: return `${numRoom} ${MORE_ROOM_TEXT}`;
+  }
 };
 
 const createGuestsDescription = function (numGuests) {
-
-  let guestsText = 'гостей';
-
-  if (numGuests === 1) { guestsText = 'гостя'; }
-  if (numGuests === 0 || numGuests > 20) { return ' не для гостей'; }
-
-  return ` для ${numGuests} ${guestsText}`;
+  if (numGuests === NUM_GUESTS_UNKNOWN || numGuests >= NUM_GUESTS_MAX_LIMIT) { return ` ${TOO_MUCH_GUEST_TEXT}`; }
+  const textSwich = numGuests % 10;
+  switch (textSwich) {
+    case 1: return ` для ${numGuests} ${ONE_GUEST_TEXT}`;
+    default: return ` для ${numGuests} ${PLURAL_GUEST_TEXT}`;
+  }
 };
 
 const createFeatureList = function (featureList, elementList) {
@@ -139,4 +156,4 @@ const createOfferCardList = function (testDataList) {
   return fragment;
 };
 
-export { createOfferCard, createOfferCardList};
+export { createOfferCard, createOfferCardList };

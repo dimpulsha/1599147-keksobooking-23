@@ -3,7 +3,6 @@ import { createOfferCard,  createOfferCardList} from './map-offer-card.js';
 import { disableMapFilter,  disableAdvertisementForm} from './form.js';
 import { enableMapFilter,  enableAdvertisementForm} from './form.js';
 
-
 const TEST_OBJECT_NUM = 3;
 const offerList = getTestData(TEST_OBJECT_NUM);
 const mapField = document.querySelector('#map-canvas');
@@ -19,4 +18,3 @@ mapField.appendChild(createOfferCardList(offerList));
 
 enableMapFilter();
 enableAdvertisementForm();
-

@@ -87,6 +87,7 @@ const checkPrice = function (minPrice, maxPrice) {
     advertisementFormPrice.removeAttribute('style');
     return true;
   }
+  advertisementFormPrice.reportValidity();
   return false;
 };
 
@@ -102,7 +103,7 @@ const checkAddress = function () {
     advertisementFormAddress.removeAttribute('style');
     return true;
   }
-  //почему браузер не выдает соотдение об ошибке?
+  //почему браузер не выдает сообщение об ошибке?
   advertisementFormAddress.reportValidity();
   return false;
 };
@@ -141,6 +142,8 @@ const checkNumRoom = function (capacityRules) {
     advertisementFormCapacity.removeAttribute('style');
     return true;
   }
+  advertisementFormRoom.reportValidity();
+  advertisementFormCapacity.reportValidity();
   return false;
 };
 

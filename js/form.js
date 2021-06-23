@@ -100,6 +100,7 @@ const checkAddress = function () {
     advertisementFormAddress.setAttribute('style', ERROR_STYLE);
   } else {
     advertisementFormAddress.setCustomValidity('');
+    return true;
   }
   //почему браузер не выдает сообщение об ошибке?
   advertisementFormAddress.reportValidity();
@@ -187,15 +188,27 @@ advertisementFormPrice.addEventListener('invalid', () => {
 });
 
 advertisementForm.addEventListener('submit', (evt) => {
+  const checkTitleResult = checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
+  const checkAddressResult = checkAddress();
+  const checkPriceResult = checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice);
+  const checkNumRoomResult = checkNumRoom(ROOM_CAPACITY);
 
-  // и не получается, чтобы ошибки по событию invalid и пользовательские проверки отображались все сразу
-  // первыми всегда срабатывает событие invalid
-  if (!checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength) ||
-    !checkAddress() || !checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice) ||
-    !checkNumRoom(ROOM_CAPACITY)) {
+  if (!checkTitleResult || !checkAddressResult || !checkPriceResult || !checkNumRoomResult) {
     advertisementForm.reportValidity();
     evt.preventDefault();
   }
+  // и не получается, чтобы ошибки по событию invalid и пользовательские проверки отображались все сразу
+  // первыми всегда срабатывает событие invalid
+
+
+// !! этот вариант работает до первой "false" и не запускает на проверку последующие функции
+  // if (!checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength) ||
+  // !checkAddress() || !checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice) ||
+  // !checkNumRoom(ROOM_CAPACITY))
+  // {
+  //   advertisementForm.reportValidity();
+  //   evt.preventDefault();
+  // }
 });
 
 export { disableMapFilter, disableAdvertisementForm, enableMapFilter, enableAdvertisementForm };

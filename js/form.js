@@ -100,8 +100,6 @@ const checkAddress = function () {
     advertisementFormAddress.setAttribute('style', ERROR_STYLE);
   } else {
     advertisementFormAddress.setCustomValidity('');
-    advertisementFormAddress.removeAttribute('style');
-    return true;
   }
   //почему браузер не выдает сообщение об ошибке?
   advertisementFormAddress.reportValidity();
@@ -142,8 +140,6 @@ const checkNumRoom = function (capacityRules) {
     advertisementFormCapacity.removeAttribute('style');
     return true;
   }
-  advertisementFormRoom.reportValidity();
-  advertisementFormCapacity.reportValidity();
   return false;
 };
 

@@ -7,7 +7,6 @@ import { } from './map/map.js';
 // const TEST_OBJECT_NUM = 3;
 // const offerList = getTestData(TEST_OBJECT_NUM);
 const mapField = document.querySelector('#map-canvas');
-
 disableMapFilter();
 disableAdvertisementForm();
 
@@ -19,5 +18,6 @@ disableAdvertisementForm();
 //вставка списка карточек на поле с картой
 // mapField.appendChild(createOfferCardList(offerList));
 
-enableMapFilter();
-enableAdvertisementForm();
+// enableMapFilter();
+// enableAdvertisementForm();
+

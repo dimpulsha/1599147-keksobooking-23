@@ -1,33 +1,46 @@
-//какое-нить замыкание типа initmap
+import { enableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
+import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-init-data.js';
+import { getTestData } from '../utils/create-test-data.js';
 
-const map = L.map('map-canvas')
-  .on('load', () => { console.log('onload'); })
-  .setView({ lat: 35.67500, lng: 139.75000 }, 14);
+//console.log(getMapId());
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+const map = L.map(getMapId())
+  .on('load', () => {
+    enableMapFilter();
+    enableAdvertisementForm();
+  })
+  .setView(getMapInitCenter(), getMapInitScale());
+
+L.tileLayer(getMapLayer(),
   {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: getMapAttribution(),
   },
 ).addTo(map);
 
-// ==================
+const mainMarkerIcon = L.icon(getMapMainIcon());
+const markerIcon = L.icon(getMapIcon());
 
-const mainMapMarkerIcon = L.icon({
-  iconUrl: '../../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
-});
-
-const mainMapMarker = L.marker({
-  lat: 35.67500,
-  lng: 139.75000,
-},
-{
-  dragable: true,
-  icon: mainMapMarkerIcon,
-},
+const mainMapMarker = L.marker(getMapInitCenter(),
+  {
+    draggable: true,
+    icon: mainMarkerIcon,
+  },
 );
 
-mainMapMarker.addTo(map);
+const initMainMarker = function () {
+  mainMapMarker.addTo(map);
+  setAddressValue(getMapInitCenter());
+};
+//mainMapMarker.addTo(map);
+initMainMarker();
+
+mainMapMarker.on('moveend', (evt) => {
+  setAddressValue(evt.target.getLatLng());
+});
+
+const dataSet = getTestData(10);
+//console.log(dataSet);
+dataSet.forEach(({location}) => { L.marker(location, { icon: markerIcon }).addTo(map); });
+
 
 console.log('map-module loading');

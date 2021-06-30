@@ -1,4 +1,3 @@
-
 const PLACE_LIST = {
   bungalow: 'Бунгало',
   flat: 'Квартира',

@@ -1,4 +1,3 @@
-import { getFornInputErrorStyle } from './form-error-setting.js';
 import { getRoomCapacity, getNoGuestLimit, getRoomPrice } from './form-object-setting.js';
 
 const mapFilter = document.querySelector('.map__filters');
@@ -45,13 +44,13 @@ const checkTimeSync = function () {
   if (advertisementFormCheckin.value !== advertisementFormCheckout.value) {
     advertisementFormCheckin.setCustomValidity('Время заезда и время выезда не синхронизированы');
     advertisementFormCheckout.setCustomValidity('Время заезда и время выезда не синхронизированы');
-    advertisementFormCheckin.setAttribute('style', getFornInputErrorStyle());
-    advertisementFormCheckout.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormCheckin.classList.add('ad-form__select--error');
+    advertisementFormCheckout.classList.add('ad-form__select--error');
   } else {
     advertisementFormCheckin.setCustomValidity('');
-    advertisementFormCheckin.removeAttribute('style');
+    advertisementFormCheckin.classList.remove('ad-form__select--error');
     advertisementFormCheckout.setCustomValidity('');
-    advertisementFormCheckout.removeAttribute('style');
+    advertisementFormCheckout.classList.remove('ad-form__select--error');
     return true;
   }
   return false;
@@ -105,13 +104,13 @@ const checkTitle = function (minLength, maxLength) {
   const valueLength = advertisementFormTitle.value.length;
   if (valueLength < minLength) {
     advertisementFormTitle.setCustomValidity(`Минимальная длина должна быть не менее ${advertisementFormTitleMinLength} знаков. \n Сейчас используется знаков: ${advertisementFormTitle.value.length} `);
-    advertisementFormTitle.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormTitle.classList.add('ad-form__input--error');
   } else if (valueLength > maxLength) {
     advertisementFormTitle.setCustomValidity(`Заголовок не должен быть длинее ${advertisementFormTitleMaxLength} знаков`);
-    advertisementFormTitle.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormTitle.classList.add('ad-form__input--error');
   } else {
     advertisementFormTitle.setCustomValidity('');
-    advertisementFormTitle.removeAttribute('style');
+    advertisementFormTitle.classList.remove('ad-form__input--error');
     return true;
   }
   return false;
@@ -122,13 +121,13 @@ const checkPrice = function (minPrice, maxPrice) {
   const valuePrice = advertisementFormPrice.value;
   if (valuePrice < Number(minPrice)) {
     advertisementFormPrice.setCustomValidity(`Цена не должна быть меньше ${minPrice}`);
-    advertisementFormPrice.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormPrice.classList.add('ad-form__input--error');
   } else if (valuePrice > Number(maxPrice)) {
     advertisementFormPrice.setCustomValidity(`Цена не должна быть больше ${maxPrice}`);
-    advertisementFormPrice.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormPrice.classList.add('ad-form__input--error');
   } else {
     advertisementFormPrice.setCustomValidity('');
-    advertisementFormPrice.removeAttribute('style');
+    advertisementFormPrice.classList.remove('ad-form__input--error');
     return true;
   }
   advertisementFormPrice.reportValidity();
@@ -140,7 +139,7 @@ const checkAddress = function () {
   const valueLength = advertisementFormAddress.value.length;
   if (valueLength === 0) {
     advertisementFormAddress.setCustomValidity('Произошло что-то непонятное. Значение адреса не заполнено');
-    advertisementFormAddress.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormAddress.classList.add('ad-form__input--error');
   } else {
     advertisementFormAddress.setCustomValidity('');
     return true;
@@ -162,22 +161,22 @@ const checkNumRoom = function (capacityRules) {
 
     advertisementFormCapacity.setCustomValidity('Для выбранного количества комнат должно быть выбрано значение \n "Не для гостей" \n Измените количество комнат или количество гостей');
 
-    advertisementFormRoom.setAttribute('style', getFornInputErrorStyle());
-    advertisementFormCapacity.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormRoom.classList.add('ad-form__select--error');
+    advertisementFormCapacity.classList.add('ad-form__select--error');
   }
   else if (currentNumRoom !== 'noGuest' && (currentCapacity < capacityRules[currentNumRoom].MIN || currentCapacity > capacityRules[currentNumRoom].MAX)) {
     advertisementFormRoom.setCustomValidity(`Для количества комнат ${currentNumRoom} указано неверное количество гостей \n Допустимое число гостей от "${capacityRules[currentNumRoom].MIN}" до "${capacityRules[currentNumRoom].MAX}" \n Измените количество комнат или количество гостей`);
 
     advertisementFormCapacity.setCustomValidity(`Для количества комнат ${currentNumRoom} указано неверное количество гостей \n Допустимое число гостей от "${capacityRules[currentNumRoom].MIN}" до "${capacityRules[currentNumRoom].MAX}" \n Измените количество комнат или количество гостей`);
 
-    advertisementFormRoom.setAttribute('style', getFornInputErrorStyle());
-    advertisementFormCapacity.setAttribute('style', getFornInputErrorStyle());
+    advertisementFormRoom.classList.add('ad-form__select--error');
+    advertisementFormCapacity.classList.add('ad-form__select--error');
   }
   else {
     advertisementFormRoom.setCustomValidity('');
     advertisementFormCapacity.setCustomValidity('');
-    advertisementFormRoom.removeAttribute('style');
-    advertisementFormCapacity.removeAttribute('style');
+    advertisementFormRoom.classList.remove('ad-form__select--error');
+    advertisementFormCapacity.classList.remove('ad-form__select--error');
     return true;
   }
   return false;
@@ -214,33 +213,43 @@ advertisementFormPlaceType.addEventListener('change', () => {
 // но оно почему-то не выдается
 // возможно неверное событие, но я не могу понять какое событие нужно
 advertisementFormAddress.addEventListener('invalid', () => {
-  advertisementFormAddress.setAttribute('style', getFornInputErrorStyle());
+  advertisementFormAddress.classList.add('ad-form__input--error');
 });
 
 // при наличии дефолтного значения не срабатывает проверка по минимальному значению. почему?
 advertisementFormTitle.addEventListener('invalid', () => {
   if (advertisementFormTitle.validity.valueMissing) { advertisementFormTitle.setCustomValidity('Поле должно быть заполнено'); }
   if (advertisementFormTitle.validity.rangeUnderflow) { advertisementFormTitle.setCustomValidity('Поле меньше минимального допустимого значения'); }
-  advertisementFormTitle.setAttribute('style', getFornInputErrorStyle());
+  advertisementFormTitle.classList.add('ad-form__input--error');
 });
 
 advertisementFormPrice.addEventListener('invalid', () => {
   if (advertisementFormPrice.validity.valueMissing) { advertisementFormPrice.setCustomValidity('Поле должно быть заполнено'); }
   if (advertisementFormPrice.validity.typeMismatch) { advertisementFormPrice.setCustomValidity('Поле должно содержать число'); }
-  advertisementFormPrice.setAttribute('style', getFornInputErrorStyle());
+  advertisementFormPrice.classList.add('ad-form__input--error');
+});
+
+// кажется добился чего хотел - все проверки выполняются при клике
+advertisementForm.querySelector('.ad-form__submit').addEventListener('click', () => {
+  checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
+  checkAddress();
+  checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice);
+  checkNumRoom(getRoomCapacity());
+  checkTimeSync();
 });
 
 advertisementForm.addEventListener('submit', (evt) => {
-  const checkTitleResult = checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
-  const checkAddressResult = checkAddress();
-  const checkPriceResult = checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice);
-  const checkNumRoomResult = checkNumRoom(getRoomCapacity());
-  const checkTimeRoomResult= checkTimeSync();
+  //console.log('submit form');
+  // const checkTitleResult = checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
+  // const checkAddressResult = checkAddress();
+  // const checkPriceResult = checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice);
+  // const checkNumRoomResult = checkNumRoom(getRoomCapacity());
+  // const checkTimeRoomResult= checkTimeSync();
 
-  if (!checkTitleResult || !checkAddressResult || !checkPriceResult || !checkNumRoomResult || !checkTimeRoomResult) {
-    advertisementForm.reportValidity();
-    evt.preventDefault();
-  }
+  // if (!checkTitleResult || !checkAddressResult || !checkPriceResult || !checkNumRoomResult || !checkTimeRoomResult) {
+  //   advertisementForm.reportValidity();
+  evt.preventDefault();
+  // }
   // и не получается, чтобы ошибки по событию invalid и пользовательские проверки отображались все сразу
   // первыми всегда срабатывает событие invalid
 });

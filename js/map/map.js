@@ -1,10 +1,11 @@
 import { enableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-init-data.js';
 import { getTestData } from '../utils/create-test-data.js';
+import { createOfferCard } from '../map-offer-card.js';
 
 //console.log(getMapId());
 
-const map = L.map(getMapId())
+const map = L.map(getMapId(), { tap: false })
   .on('load', () => {
     enableMapFilter();
     enableAdvertisementForm();
@@ -38,9 +39,17 @@ mainMapMarker.on('moveend', (evt) => {
   setAddressValue(evt.target.getLatLng());
 });
 
+const mapLayer = L.layerGroup().addTo(map);
 const dataSet = getTestData(10);
 //console.log(dataSet);
-dataSet.forEach(({location}) => { L.marker(location, { icon: markerIcon }).addTo(map); });
+const createOfferMarker = function (element) {
+  L.marker(element.location, { icon: markerIcon }).addTo(mapLayer).bindPopup(createOfferCard(element), {
+    keepInView: true,
+  });
+};
 
 
-console.log('map-module loading');
+dataSet.forEach((dataItem) => createOfferMarker(dataItem));
+
+
+//console.log('map-module loading');

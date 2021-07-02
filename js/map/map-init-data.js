@@ -31,5 +31,4 @@ const getMapAttribution = () => MAP_ATTRIBUTION;
 const getMapMainIcon = () => MAP_MAIN_ICON;
 const getMapIcon = () => MAP_ICON;
 
-
 export { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon };

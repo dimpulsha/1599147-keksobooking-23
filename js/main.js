@@ -9,8 +9,6 @@ import { } from './map/map.js';
 // disableMapFilter();
 // disableAdvertisementForm();
 
-// const newMap = initMap('map-canvas', enableMapFilter, enableAdvertisementForm);
-// const getMap = () => newMap;
 // const TEST_OBJECT_NUM = 3;
 // const offerList = getTestData(TEST_OBJECT_NUM);
 
@@ -23,4 +21,3 @@ import { } from './map/map.js';
 // enableMapFilter();
 // enableAdvertisementForm();
 
-// export { getMap };

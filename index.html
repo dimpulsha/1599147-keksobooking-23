@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
+  <link rel="stylesheet" href="./leaflet/leaflet.css"/>
+  <!-- integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" -->
 </head>
 
 <body>
@@ -101,7 +103,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text" value="35.67500, 139.75000" required readonly>
+          <input id="address" name="address" type="text" required readonly>
          <!--  value="35.67500, 139.75000" -->
         </fieldset>
         <fieldset class="ad-form__element">
@@ -252,7 +254,8 @@
       <button type="button" class="error__button">Попробовать снова</button>
     </div>
   </template>
-  <script src="js/main.js" type="module"></script>
+  <script src="./leaflet/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script src="./js/main.js" type="module"></script>
 </body>
 
 </html>

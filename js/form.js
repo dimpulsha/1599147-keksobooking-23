@@ -39,6 +39,11 @@ const setTimeList = function (timeList, timeValue) {
   });
 };
 
+const setAddressValue = function (addressValueObject){
+  advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)  }, ${ addressValueObject.lng.toFixed(5)}`;
+};
+
+
 //контроль синхронизации времени
 const checkTimeSync = function () {
   if (advertisementFormCheckin.value !== advertisementFormCheckout.value) {
@@ -254,4 +259,7 @@ advertisementForm.addEventListener('submit', (evt) => {
   // первыми всегда срабатывает событие invalid
 });
 
-export { disableMapFilter, disableAdvertisementForm, enableMapFilter, enableAdvertisementForm };
+disableMapFilter();
+disableAdvertisementForm();
+
+export { disableMapFilter, disableAdvertisementForm, enableMapFilter, enableAdvertisementForm, setAddressValue };

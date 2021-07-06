@@ -1,7 +1,8 @@
 import { enableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
-import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-init-data.js';
-import { getTestData } from '../utils/create-test-data.js';
+import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
+// import { getTestData } from '../utils/create-test-data.js';
 import { createOfferCard } from '../map-offer-card.js';
+import { getData } from '../fetch-data.js';
 
 const map = L.map(getMapId(), { tap: false })
   .on('load', () => {
@@ -38,11 +39,19 @@ mainMapMarker.on('moveend', (evt) => {
 });
 
 const mapLayer = L.layerGroup().addTo(map);
-const dataSet = getTestData(10);
+// const dataSet = getTestData(10);
+
 
 const createOfferMarker = function (element) {
   //console.log(createOfferCard(element));
   L.marker(element.location, { icon: markerIcon }).addTo(mapLayer).bindPopup(createOfferCard(element));
 };
 
-dataSet.forEach((dataItem) => createOfferMarker(dataItem));
+const MAX_OFFER = 10;
+const createMarkerList = function (dataSet) {
+  dataSet
+    .slice(0, MAX_OFFER)
+    .forEach((dataItem) => createOfferMarker(dataItem));
+};
+
+getData(createMarkerList);

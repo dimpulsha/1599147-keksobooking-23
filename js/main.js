@@ -21,4 +21,4 @@ import { } from './map/map.js';
 // enableMapFilter();
 // enableAdvertisementForm();
 
-fetch('https://23.javascript.pages.academy/keksobooking/data').then((response) => response.json()).then((data)=> console.log(data));
+//fetch('https://23.javascript.pages.academy/keksobooking/data').then((response) => response.json()).then((data)=> console.log(data));

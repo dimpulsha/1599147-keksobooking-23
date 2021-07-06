@@ -147,12 +147,12 @@ const createOfferCard = function (offerItem) {
   return newPopupCard;
 };
 
-const createOfferCardList = function (testDataList) {
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < testDataList.length; i++) {
-    fragment.appendChild(createOfferCard(testDataList[i]));
-  }
-  return fragment;
-};
+// const createOfferCardList = function (testDataList) {
+//   const fragment = document.createDocumentFragment();
+//   for (let i = 0; i < testDataList.length; i++) {
+//     fragment.appendChild(createOfferCard(testDataList[i]));
+//   }
+//   return fragment;
+// };
 
-export { createOfferCard, createOfferCardList };
+export { createOfferCard };

@@ -51,4 +51,6 @@ function createRandomUnicList(srcList) {
   return newList;
 }
 
-export { getRandomInt, getRandomPositiveFloat, getRandomListValue, createRandomNoUnicList, createRandomUnicList };
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export { getRandomInt, getRandomPositiveFloat, getRandomListValue, createRandomNoUnicList, createRandomUnicList, isEscEvent };

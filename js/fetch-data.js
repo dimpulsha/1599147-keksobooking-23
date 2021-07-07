@@ -7,12 +7,23 @@ const getData = function (onSuccess, onError) {
     .then((response) => {
       if (response.ok) {
         response.json()
-          .then((data) => onSuccess(data));
+          .then((data) => { onSuccess(data); });
       } else { onError(); }
     })
     .catch(() => { onError(); });
 };
 
-export { getData };
+const postData = function (onSuccess, onError, bodyData) {
+  fetch(SEND_DATA_URL, {
+    method: 'POST',
+    body: bodyData,
+  }).then((response) => {
+    if (response.ok) {
+      onSuccess();
+    } else {
+      onError();
+    }
+  }).catch(() => { onError(); });
+};
 
-
+export { getData, postData };

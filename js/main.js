@@ -7,4 +7,5 @@ import { } from './map-offer-card.js';
 import { initOffer, showAlertInitOffer } from './map/map.js';
 import { getData } from './fetch-data.js';
 
+
 getData(initOffer, showAlertInitOffer);

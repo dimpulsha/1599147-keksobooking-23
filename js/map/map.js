@@ -1,12 +1,12 @@
-import { enableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
+import { enableMapFilter, disableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
 // import { getTestData } from '../utils/create-test-data.js';
 import { createOfferCard } from '../map-offer-card.js';
-import { getData } from '../fetch-data.js';
+import { showAlertGetDataError } from '../popup.js';
 
 const map = L.map(getMapId(), { tap: false })
   .on('load', () => {
-    enableMapFilter();
+
     enableAdvertisementForm();
   })
   .setView(getMapInitCenter(), getMapInitScale());
@@ -54,4 +54,16 @@ const createMarkerList = function (dataSet) {
     .forEach((dataItem) => createOfferMarker(dataItem));
 };
 
-getData(createMarkerList);
+const initOffer = function (dataSet) {
+  enableMapFilter();
+  createMarkerList(dataSet);
+  //console.log(dataSet);
+  // return dataSet;
+};
+
+const showAlertInitOffer = function () {
+  showAlertGetDataError();
+  disableMapFilter();
+};
+
+export {showAlertInitOffer, initOffer};

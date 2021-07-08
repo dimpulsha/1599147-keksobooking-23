@@ -4,20 +4,8 @@
 // import { enableMapFilter, enableAdvertisementForm } from './form.js';
 import { } from './form.js';
 import { } from './map-offer-card.js';
-import { } from './map/map.js';
+import { initOffer, showAlertInitOffer } from './map/map.js';
+import { getData } from './fetch-data.js';
 
-// disableMapFilter();
-// disableAdvertisementForm();
 
-// const TEST_OBJECT_NUM = 3;
-// const offerList = getTestData(TEST_OBJECT_NUM);
-
-//вставка одной карточки на поле с картой
-// mapField.appendChild(createOfferCard(offerList[1]));
-
-//вставка списка карточек на поле с картой
-// mapField.appendChild(createOfferCardList(offerList));
-
-// enableMapFilter();
-// enableAdvertisementForm();
-
+getData(initOffer, showAlertInitOffer);

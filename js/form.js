@@ -1,4 +1,6 @@
 import { getRoomCapacity, getNoGuestLimit, getRoomPrice } from './form-object-setting.js';
+import { postData } from './fetch-data.js';
+import { showSuccessPostPopup, showErrorPostPopup } from './popup.js';
 
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElement = mapFilter.querySelectorAll('.map__filter, .map__features');
@@ -39,8 +41,8 @@ const setTimeList = function (timeList, timeValue) {
   });
 };
 
-const setAddressValue = function (addressValueObject){
-  advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)  }, ${ addressValueObject.lng.toFixed(5)}`;
+const setAddressValue = function (addressValueObject) {
+  advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)}, ${addressValueObject.lng.toFixed(5)}`;
 };
 
 
@@ -244,19 +246,9 @@ advertisementForm.querySelector('.ad-form__submit').addEventListener('click', ()
 });
 
 advertisementForm.addEventListener('submit', (evt) => {
-  //console.log('submit form');
-  // const checkTitleResult = checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
-  // const checkAddressResult = checkAddress();
-  // const checkPriceResult = checkPrice(advertisementFormMinPrice, advertisementFormMaxPrice);
-  // const checkNumRoomResult = checkNumRoom(getRoomCapacity());
-  // const checkTimeRoomResult= checkTimeSync();
-
-  // if (!checkTitleResult || !checkAddressResult || !checkPriceResult || !checkNumRoomResult || !checkTimeRoomResult) {
-  //   advertisementForm.reportValidity();
   evt.preventDefault();
-  // }
-  // и не получается, чтобы ошибки по событию invalid и пользовательские проверки отображались все сразу
-  // первыми всегда срабатывает событие invalid
+  const formData = new FormData(evt.target);
+  postData(showSuccessPostPopup, showErrorPostPopup, formData);
 });
 
 disableMapFilter();

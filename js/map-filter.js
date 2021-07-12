@@ -15,8 +15,9 @@ const enableMapFilter = function () {
 };
 
 const resetMapFilter = function () {
-  mapFilterDropDownList.forEach((element) => { element.value = 'any'; });
-  mapFilterFeatureList.forEach((element) => { element.checked = false; });
+  mapFilter.reset();
+  // mapFilterDropDownList.forEach((element) => { element.value = 'any'; });
+  // mapFilterFeatureList.forEach((element) => { element.checked = false; });
 };
 
 export { disableMapFilter, enableMapFilter, resetMapFilter };

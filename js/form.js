@@ -1,9 +1,8 @@
 import { getRoomCapacity, getNoGuestLimit, getRoomPrice } from './form-object-setting.js';
 import { postData } from './fetch-data.js';
 import { showSuccessPostPopup, showErrorPostPopup } from './popup.js';
-
-const mapFilter = document.querySelector('.map__filters');
-const mapFilterElement = mapFilter.querySelectorAll('.map__filter, .map__features');
+import { resetMapFilter } from './map-filter.js';
+import { resetMainMarker } from './map/map.js';
 
 const advertisementForm = document.querySelector('.ad-form');
 const advertisementFormElement = advertisementForm.querySelectorAll('.ad-form-header, .ad-form__element');
@@ -30,6 +29,8 @@ const advertisementFormCheckout = advertisementForm.querySelector('#timeout');
 const checkinTimeList = advertisementFormCheckin.querySelectorAll('option');
 const checkoutTimeList = advertisementFormCheckout.querySelectorAll('option');
 
+const advertisementRoomFeaturesList = advertisementForm.querySelectorAll('.features__checkbox');
+
 //смена разметки в списке
 const setTimeList = function (timeList, timeValue) {
   timeList.forEach((element) => {
@@ -44,7 +45,6 @@ const setTimeList = function (timeList, timeValue) {
 const setAddressValue = function (addressValueObject) {
   advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)}, ${addressValueObject.lng.toFixed(5)}`;
 };
-
 
 //контроль синхронизации времени
 const checkTimeSync = function () {
@@ -85,19 +85,9 @@ const setPlacePrice = function (priceRules) {
   priceInput.setAttribute('placeholder', priceRules[currentPlaceType].MIN_PRICE);
 };
 
-const disableMapFilter = function () {
-  mapFilter.classList.add('map__filters--disabled');
-  mapFilterElement.forEach((element) => { element.setAttribute('disabled', ''); });
-};
-
 const disableAdvertisementForm = function () {
   advertisementForm.classList.add('ad-form--disabled');
   advertisementFormElement.forEach((element) => { element.setAttribute('disabled', ''); });
-};
-
-const enableMapFilter = function () {
-  mapFilter.classList.remove('map__filters--disabled');
-  mapFilterElement.forEach((element) => { element.removeAttribute('disabled'); });
 };
 
 const enableAdvertisementForm = function () {
@@ -216,14 +206,10 @@ advertisementFormPlaceType.addEventListener('change', () => {
   advertisementFormPrice.dispatchEvent(inputEvent);
 });
 
-// адрес установлен required readonly. я бы хотел, чтобы  хоть что-то происходило по событию invalid
-// но оно почему-то не выдается
-// возможно неверное событие, но я не могу понять какое событие нужно
 advertisementFormAddress.addEventListener('invalid', () => {
   advertisementFormAddress.classList.add('ad-form__input--error');
 });
 
-// при наличии дефолтного значения не срабатывает проверка по минимальному значению. почему?
 advertisementFormTitle.addEventListener('invalid', () => {
   if (advertisementFormTitle.validity.valueMissing) { advertisementFormTitle.setCustomValidity('Поле должно быть заполнено'); }
   if (advertisementFormTitle.validity.rangeUnderflow) { advertisementFormTitle.setCustomValidity('Поле меньше минимального допустимого значения'); }
@@ -236,7 +222,40 @@ advertisementFormPrice.addEventListener('invalid', () => {
   advertisementFormPrice.classList.add('ad-form__input--error');
 });
 
-// кажется добился чего хотел - все проверки выполняются при клике
+const resetForm = function () {
+  advertisementForm.querySelector('#avatar').value = '';
+  advertisementFormTitle.value = '';
+  advertisementFormPlaceType.value = 'flat';
+  advertisementFormPrice.value = null;
+  setPlacePrice(getRoomPrice());
+  advertisementFormRoom.value = 1;
+  advertisementFormCapacity.value = 3;
+  advertisementFormCheckin.value = '12:00';
+  advertisementFormCheckout.value = '14:00';
+  advertisementRoomFeaturesList.forEach((element) => { element.checked = false; });
+  advertisementForm.querySelector('#description').value = '';
+};
+
+const resetPageForm = function () {
+  resetForm();
+  resetMapFilter();
+  resetMainMarker();
+};
+
+const resetAlertStyle = function () {
+  advertisementForm.querySelectorAll('.ad-form__input--error, .ad-form__select--error')
+    .forEach((element) => {
+      element.classList.remove('ad-form__input--error');
+      element.classList.remove('ad-form__select--error');
+    });
+};
+
+
+const successPostData = function () {
+  showSuccessPostPopup();
+  resetPageForm();
+};
+
 advertisementForm.querySelector('.ad-form__submit').addEventListener('click', () => {
   checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
   checkAddress();
@@ -248,10 +267,15 @@ advertisementForm.querySelector('.ad-form__submit').addEventListener('click', ()
 advertisementForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
-  postData(showSuccessPostPopup, showErrorPostPopup, formData);
+  postData(successPostData, showErrorPostPopup, formData);
 });
 
-disableMapFilter();
+advertisementForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetPageForm();
+  resetAlertStyle();
+});
+
 disableAdvertisementForm();
 
-export { disableMapFilter, disableAdvertisementForm, enableMapFilter, enableAdvertisementForm, setAddressValue };
+export { disableAdvertisementForm, enableAdvertisementForm, setAddressValue };

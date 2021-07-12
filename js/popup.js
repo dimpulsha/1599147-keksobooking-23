@@ -32,51 +32,62 @@ const showAlertGetDataError = function () {
 
 const removePopup = function (popupElement) {
   popupElement.remove();
-  //document.removeEventListener('click');
   document.removeEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
-      evt.preventDefault();
       removePopup(popupElement);
     }
   });
-  document.removeEventListener('click', (evt) => {
-    evt.preventDefault();
+  document.removeEventListener('click', () => {
     removePopup(popupElement);
   });
+  if (popupElement.querySelector('.error__button')) {
+    popupElement.querySelector('.error__button').removeEventListener('keydown', () => {
+      removePopup(popupElement);
+    });
+  }
 };
 
-const addPopupCloseKeydown = function (popupElement) {
+const addPopupEscClose = function (popupElement) {
   document.addEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
-      evt.preventDefault();
       removePopup(popupElement);
     }
   });
 };
 
-const addPopupCloseClick = function (popupElement) {
-  document.addEventListener('click', (evt) => {
-    evt.preventDefault();
+const addPopupClickClose = function (popupElement) {
+  document.addEventListener('click', () => {
     removePopup(popupElement);
   });
 };
 
-const showPostPopup = function (popupElement) {
+const addPopupErrorButtonClose = function (popupElement) {
+  const button = popupElement.querySelector('.error__button');
+  button.focus();
+  button.addEventListener('keydown', () => {
+    removePopup(popupElement);
+  });
+};
+
+const showPostPopup = function (popupElement, type = true) {
   document.body.appendChild(popupElement);
-  addPopupCloseKeydown(popupElement);
-  addPopupCloseClick(popupElement);
+  addPopupEscClose(popupElement);
+  addPopupClickClose(popupElement);
+  if (!type) {
+    addPopupErrorButtonClose(popupElement);
+  }
 };
 
 const showSuccessPostPopup = function () {
   const succesTemplate = document.querySelector('#success').content;
   const newSuccessPopup = succesTemplate.querySelector('.success');
-  showPostPopup(newSuccessPopup);
+  showPostPopup(newSuccessPopup, true);
 };
 
 const showErrorPostPopup = function () {
   const errorTemplate = document.querySelector('#error').content;
   const newErrorPopup = errorTemplate.querySelector('.error').cloneNode(true);
-  showPostPopup(newErrorPopup);
+  showPostPopup(newErrorPopup, false);
 };
 
 export { showAlertGetDataError, showPostPopup, showSuccessPostPopup, showErrorPostPopup };

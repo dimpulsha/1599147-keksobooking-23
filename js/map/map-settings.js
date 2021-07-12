@@ -5,7 +5,7 @@ const MAP_INIT_CENTER = {
   lng: 139.75000,
 };
 
-const MAP_INIT_SCALE = 14;
+const MAP_INIT_SCALE = 13;
 
 const MAP_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 

@@ -26,22 +26,6 @@ const advertisementFormCapacity = advertisementForm.querySelector('#capacity');
 const advertisementFormCheckin = advertisementForm.querySelector('#timein');
 const advertisementFormCheckout = advertisementForm.querySelector('#timeout');
 
-const checkinTimeList = advertisementFormCheckin.querySelectorAll('option');
-const checkoutTimeList = advertisementFormCheckout.querySelectorAll('option');
-
-const advertisementRoomFeaturesList = advertisementForm.querySelectorAll('.features__checkbox');
-
-//смена разметки в списке
-const setTimeList = function (timeList, timeValue) {
-  timeList.forEach((element) => {
-    if (element.value === timeValue) {
-      element.setAttribute('selected', '');
-    } else {
-      element.removeAttribute('selected');
-    }
-  });
-};
-
 const setAddressValue = function (addressValueObject) {
   advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)}, ${addressValueObject.lng.toFixed(5)}`;
 };
@@ -64,15 +48,11 @@ const checkTimeSync = function () {
 };
 
 advertisementForm.querySelector('#timein').addEventListener('change', () => {
-  setTimeList(checkoutTimeList, advertisementFormCheckin.value);
-  setTimeList(checkinTimeList, advertisementFormCheckin.value);
   advertisementFormCheckout.value = advertisementFormCheckin.value;
   checkTimeSync();
 });
 
 advertisementForm.querySelector('#timeout').addEventListener('change', () => {
-  setTimeList(checkinTimeList, advertisementFormCheckout.value);
-  setTimeList(checkoutTimeList, advertisementFormCheckout.value);
   advertisementFormCheckin.value = advertisementFormCheckout.value;
   checkTimeSync();
 });
@@ -141,7 +121,6 @@ const checkAddress = function () {
     advertisementFormAddress.setCustomValidity('');
     return true;
   }
-  //почему браузер не выдает сообщение об ошибке?
   advertisementFormAddress.reportValidity();
   return false;
 };
@@ -223,17 +202,8 @@ advertisementFormPrice.addEventListener('invalid', () => {
 });
 
 const resetForm = function () {
-  advertisementForm.querySelector('#avatar').value = '';
-  advertisementFormTitle.value = '';
-  advertisementFormPlaceType.value = 'flat';
-  advertisementFormPrice.value = null;
+  advertisementForm.reset();
   setPlacePrice(getRoomPrice());
-  advertisementFormRoom.value = 1;
-  advertisementFormCapacity.value = 3;
-  advertisementFormCheckin.value = '12:00';
-  advertisementFormCheckout.value = '14:00';
-  advertisementRoomFeaturesList.forEach((element) => { element.checked = false; });
-  advertisementForm.querySelector('#description').value = '';
 };
 
 const resetPageForm = function () {
@@ -249,7 +219,6 @@ const resetAlertStyle = function () {
       element.classList.remove('ad-form__select--error');
     });
 };
-
 
 const successPostData = function () {
   showSuccessPostPopup();

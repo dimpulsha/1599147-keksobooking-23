@@ -1,9 +1,11 @@
-import {  enableAdvertisementForm, setAddressValue } from '../form.js';
+import { enableAdvertisementForm, setAddressValue } from '../form.js';
 import { enableMapFilter, disableMapFilter } from '../map-filter.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
 // import { getTestData } from '../utils/create-test-data.js';
 import { createOfferCard } from '../map-offer-card.js';
 import { showAlertGetDataError } from '../popup.js';
+
+const MAX_OFFER = 10;
 
 const map = L.map(getMapId(), { tap: false })
   .on('load', () => {
@@ -43,22 +45,37 @@ mainMapMarker.on('moveend', (evt) => {
   setAddressValue(evt.target.getLatLng());
 });
 
-const mapLayer = L.layerGroup().addTo(map);
-
-const createOfferMarker = function (element) {
-  L.marker(element.location, { icon: markerIcon }).addTo(mapLayer).bindPopup(createOfferCard(element));
+const createMarkerLayer = function () {
+  return L.layerGroup().addTo(map);
 };
 
-const MAX_OFFER = 10;
-const createMarkerList = function (dataSet) {
+const markerLayer = createMarkerLayer();
+
+const removeMarkerPopUp = function () {
+  const popup = document.querySelector('.leaflet-popup');
+  if (popup) {popup .remove();}
+};
+
+const createOfferMarker = function (element) {
+  L.marker(element.location,
+    {
+      icon: markerIcon,
+    })
+    .addTo(markerLayer)
+    .bindPopup(createOfferCard(element));
+};
+
+// инициализация нефильтрованых маркеров на карте
+const renderOfferMarkerList = function (dataSet) {
+  markerLayer.clearLayers();
   dataSet
     .slice(0, MAX_OFFER)
     .forEach((dataItem) => createOfferMarker(dataItem));
 };
 
-const enableMapAction = function (dataSet) {
+const enableMap = function (dataSet) {
+  renderOfferMarkerList(dataSet);
   enableMapFilter();
-  createMarkerList(dataSet);
 };
 
 const showAlertInitOffer = function () {
@@ -66,4 +83,4 @@ const showAlertInitOffer = function () {
   disableMapFilter();
 };
 
-export {showAlertInitOffer, enableMapAction, resetMainMarker};
+export { showAlertInitOffer, enableMap, resetMainMarker, removeMarkerPopUp, renderOfferMarkerList };

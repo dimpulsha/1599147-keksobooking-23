@@ -1,4 +1,5 @@
-import { enableMapFilter, disableMapFilter, enableAdvertisementForm, setAddressValue } from '../form.js';
+import {  enableAdvertisementForm, setAddressValue } from '../form.js';
+import { enableMapFilter, disableMapFilter } from '../map-filter.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
 // import { getTestData } from '../utils/create-test-data.js';
 import { createOfferCard } from '../map-offer-card.js';
@@ -6,7 +7,6 @@ import { showAlertGetDataError } from '../popup.js';
 
 const map = L.map(getMapId(), { tap: false })
   .on('load', () => {
-
     enableAdvertisementForm();
   })
   .setView(getMapInitCenter(), getMapInitScale());
@@ -32,6 +32,11 @@ const initMainMarker = function () {
   setAddressValue(getMapInitCenter());
 };
 
+const resetMainMarker = function () {
+  mainMapMarker.setLatLng(getMapInitCenter());
+  setAddressValue(getMapInitCenter());
+};
+
 initMainMarker();
 
 mainMapMarker.on('moveend', (evt) => {
@@ -39,11 +44,8 @@ mainMapMarker.on('moveend', (evt) => {
 });
 
 const mapLayer = L.layerGroup().addTo(map);
-// const dataSet = getTestData(10);
-
 
 const createOfferMarker = function (element) {
-  //console.log(createOfferCard(element));
   L.marker(element.location, { icon: markerIcon }).addTo(mapLayer).bindPopup(createOfferCard(element));
 };
 
@@ -54,11 +56,9 @@ const createMarkerList = function (dataSet) {
     .forEach((dataItem) => createOfferMarker(dataItem));
 };
 
-const initOffer = function (dataSet) {
+const enableMapAction = function (dataSet) {
   enableMapFilter();
   createMarkerList(dataSet);
-  //console.log(dataSet);
-  // return dataSet;
 };
 
 const showAlertInitOffer = function () {
@@ -66,4 +66,4 @@ const showAlertInitOffer = function () {
   disableMapFilter();
 };
 
-export {showAlertInitOffer, initOffer};
+export {showAlertInitOffer, enableMapAction, resetMainMarker};

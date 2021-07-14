@@ -17,6 +17,8 @@ const disableMapFilter = function () {
   mapFilterFeatureList.forEach((element) => { element.setAttribute('disabled', ''); });
 };
 
+disableMapFilter();
+
 const enableMapFilter = function () {
   mapFilter.classList.remove('map__filters--disabled');
   mapFilterDropDownList.forEach((element) => { element.removeAttribute('disabled'); });
@@ -28,16 +30,13 @@ const resetMapFilter = function () {
 };
 
 const checkPriceFilter = function (elementValue, filterValue) {
-  //переделать на  case
-  if (filterValue === 'any') {
-    return true;
+  switch (filterValue) {
+    case 'any': return true;
+    case 'low': return elementValue < getPriceFilterLimit().LOW.MAX;
+    case 'middle': return (elementValue >= getPriceFilterLimit().MEDIUM.MIN && elementValue < getPriceFilterLimit().MEDIUM.MAX);
+    case 'high': return elementValue >= getPriceFilterLimit().HIGH.MIN;
+    default: return false;
   }
-  if ((filterValue === 'low' && elementValue < getPriceFilterLimit().LOW.MAX) ||
-    (filterValue === 'medium' && elementValue >= getPriceFilterLimit().MEDIUM.MIN && elementValue < getPriceFilterLimit().MEDIUM.MAX) ||
-    (filterValue === 'high' && elementValue >= getPriceFilterLimit().HIGH.MIN)) {
-    return true;
-  }
-  return false;
 };
 
 const checkFilterItem = function (elementValue, filterValue) {
@@ -55,7 +54,6 @@ const checkFiltredElement = function (element) {
 
 const filterPlaceType = function (dataSet) {
   return dataSet.filter(checkFiltredElement);
-  //затем передаем массив на сортировку по рейтингу
 };
 
 const getFeaturesRank = function (element) {

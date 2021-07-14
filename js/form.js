@@ -30,7 +30,6 @@ const setAddressValue = function (addressValueObject) {
   advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)}, ${addressValueObject.lng.toFixed(5)}`;
 };
 
-//контроль синхронизации времени
 const checkTimeSync = function () {
   if (advertisementFormCheckin.value !== advertisementFormCheckout.value) {
     advertisementFormCheckin.setCustomValidity('Время заезда и время выезда не синхронизированы');
@@ -93,7 +92,6 @@ const checkTitle = function (minLength, maxLength) {
   return false;
 };
 
-//проверка цены при вводе
 const checkPrice = function (minPrice, maxPrice) {
   const valuePrice = advertisementFormPrice.value;
   if (valuePrice < Number(minPrice)) {
@@ -111,7 +109,6 @@ const checkPrice = function (minPrice, maxPrice) {
   return false;
 };
 
-// проверка адреса
 const checkAddress = function () {
   const valueLength = advertisementFormAddress.value.length;
   if (valueLength === 0) {
@@ -125,7 +122,6 @@ const checkAddress = function () {
   return false;
 };
 
-//проверка комнат
 const checkNumRoom = function (capacityRules) {
   let currentNumRoom = advertisementFormRoom.value;
   const currentCapacity = advertisementFormCapacity.value;
@@ -158,7 +154,6 @@ const checkNumRoom = function (capacityRules) {
   return false;
 };
 
-//запуск проверок на этапе ввода
 advertisementFormTitle.addEventListener('input', () => {
   checkTitle(advertisementFormTitleMinLength, advertisementFormTitleMaxLength);
   advertisementFormTitle.reportValidity();

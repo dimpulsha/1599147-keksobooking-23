@@ -4,6 +4,8 @@ import { showSuccessPostPopup, showErrorPostPopup } from './popup.js';
 import { resetMapFilter } from './map-filter.js';
 import { resetMainMarker } from './map/map.js';
 
+const AVATAR_SRC = 'img/muffin-grey.svg';
+
 const advertisementForm = document.querySelector('.ad-form');
 const advertisementFormElement = advertisementForm.querySelectorAll('.ad-form-header, .ad-form__element');
 
@@ -75,7 +77,6 @@ const enableAdvertisementForm = function () {
   advertisementFormElement.forEach((element) => { element.removeAttribute('disabled'); });
 };
 
-//проверка заголовка при вводе
 const checkTitle = function (minLength, maxLength) {
   const valueLength = advertisementFormTitle.value.length;
   if (valueLength < minLength) {
@@ -87,9 +88,7 @@ const checkTitle = function (minLength, maxLength) {
   } else {
     advertisementFormTitle.setCustomValidity('');
     advertisementFormTitle.classList.remove('ad-form__input--error');
-    return true;
   }
-  return false;
 };
 
 const checkPrice = function (minPrice, maxPrice) {
@@ -103,23 +102,18 @@ const checkPrice = function (minPrice, maxPrice) {
   } else {
     advertisementFormPrice.setCustomValidity('');
     advertisementFormPrice.classList.remove('ad-form__input--error');
-    return true;
   }
   advertisementFormPrice.reportValidity();
-  return false;
 };
 
 const checkAddress = function () {
-  const valueLength = advertisementFormAddress.value.length;
-  if (valueLength === 0) {
+  if (advertisementFormAddress.value.length === 0) {
     advertisementFormAddress.setCustomValidity('Произошло что-то непонятное. Значение адреса не заполнено');
     advertisementFormAddress.classList.add('ad-form__input--error');
   } else {
     advertisementFormAddress.setCustomValidity('');
-    return true;
   }
   advertisementFormAddress.reportValidity();
-  return false;
 };
 
 const checkNumRoom = function (capacityRules) {
@@ -149,9 +143,7 @@ const checkNumRoom = function (capacityRules) {
     advertisementFormCapacity.setCustomValidity('');
     advertisementFormRoom.classList.remove('ad-form__select--error');
     advertisementFormCapacity.classList.remove('ad-form__select--error');
-    return true;
   }
-  return false;
 };
 
 advertisementFormTitle.addEventListener('input', () => {
@@ -199,6 +191,8 @@ advertisementFormPrice.addEventListener('invalid', () => {
 const resetForm = function () {
   advertisementForm.reset();
   setPlacePrice(getRoomPrice());
+  advertisementForm.querySelector('.ad-form-header__preview img').setAttribute('src', AVATAR_SRC);
+  document.querySelectorAll('.ad-form__photo:not(:empty)').forEach((element) => { element.remove();});
 };
 
 const resetPageForm = function () {

@@ -65,7 +65,6 @@ const createOfferMarker = function (element) {
     .bindPopup(createOfferCard(element));
 };
 
-// инициализация нефильтрованых маркеров на карте
 const renderOfferMarkerList = function (dataSet) {
   markerLayer.clearLayers();
   dataSet

@@ -78,12 +78,12 @@ const compareOfferRank = function (offerA, offerB) {
   return offerRankB - offerRankA;
 };
 
-const debounceApplayingFilter = debounce((dataSet) => { renderOfferMarkerList(filterPlaceType(dataSet).sort(compareOfferRank)); });
+const debounceRenderMarker = debounce((dataSet) => { renderOfferMarkerList(filterPlaceType(dataSet).sort(compareOfferRank)); });
 
 const changeFilter = function (dataSet) {
   mapFilter.addEventListener('change', () => {
     removeMarkerPopUp();
-    debounceApplayingFilter(dataSet);
+    debounceRenderMarker(dataSet);
   });
 };
 

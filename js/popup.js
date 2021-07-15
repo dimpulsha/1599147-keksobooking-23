@@ -1,6 +1,16 @@
 import { isEscEvent } from './utils/utils-function.js';
+import { mainLoadData } from './main.js';
+
 const ALERT_GET_DATA_MESSAGE = 'Ошибка загрузки объявлений';
 const ALERT_GET_DATA_BUTTON_TEXT = 'Повторить загрузку';
+
+const reloadData = function () {
+  const alertGetDataError = document.querySelector('.map__error-alert');
+  const alertButton = alertGetDataError.querySelector('button');
+  alertGetDataError.remove();
+  alertButton.removeEventListener('click', reloadData);
+  mainLoadData();
+};
 
 const createAlertGetDataError = function () {
 
@@ -18,15 +28,14 @@ const createAlertGetDataError = function () {
   alertDiv.appendChild(alertMessage);
   alertDiv.appendChild(alertButton);
 
-  return alertDiv;
+  alertButton.addEventListener('click', reloadData);
 
+  return alertDiv;
 };
 
 const showAlertGetDataError = function () {
-  // выделил, чтобы потом попробовать добавить обработчик на  button
   const mapFilter = document.querySelector('.map__filters-container');
   const map = document.querySelector('.map');
-
   map.insertBefore(createAlertGetDataError(), mapFilter);
 };
 

@@ -25,8 +25,10 @@ const enableMapFilter = function () {
   mapFilterFeatureList.forEach((element) => { element.removeAttribute('disabled'); });
 };
 
+const changeEvent = new Event('change');
 const resetMapFilter = function () {
   mapFilter.reset();
+  mapFilter.dispatchEvent(changeEvent);
 };
 
 const checkPriceFilter = function (elementValue, filterValue) {

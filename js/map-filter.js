@@ -1,6 +1,6 @@
 import { removeMarkerPopUp, renderOfferMarkerList } from './map/map.js';
 import { getPriceFilterLimit, getDefaultFilterValue } from './filter-object-settings.js';
-import { debounce } from './utils/debounce.js';
+import { debounce } from './utils/utils-function.js';
 
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterDropDownList = mapFilter.querySelectorAll('.map__filter');

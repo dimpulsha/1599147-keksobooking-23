@@ -4,7 +4,7 @@ import { mainLoadData } from './main.js';
 const ALERT_GET_DATA_MESSAGE = 'Ошибка загрузки объявлений';
 const ALERT_GET_DATA_BUTTON_TEXT = 'Повторить загрузку';
 
-const reloadData = function () {
+const reloadData = () => {
   const alertGetDataError = document.querySelector('.map__error-alert');
   const alertButton = alertGetDataError.querySelector('button');
   alertGetDataError.remove();
@@ -12,7 +12,7 @@ const reloadData = function () {
   mainLoadData();
 };
 
-const createAlertGetDataError = function () {
+const createAlertGetDataError = () => {
 
   const alertDiv = document.createElement('div');
   alertDiv.classList.add('map__error-alert');
@@ -33,13 +33,13 @@ const createAlertGetDataError = function () {
   return alertDiv;
 };
 
-const showAlertGetDataError = function () {
+const showAlertGetDataError = () => {
   const mapFilter = document.querySelector('.map__filters-container');
   const map = document.querySelector('.map');
   map.insertBefore(createAlertGetDataError(), mapFilter);
 };
 
-const removePopup = function (popupElement) {
+const removePopup = (popupElement) => {
   popupElement.remove();
   document.removeEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
@@ -56,7 +56,7 @@ const removePopup = function (popupElement) {
   }
 };
 
-const addPopupEscClose = function (popupElement) {
+const addPopupEscClose = (popupElement) => {
   document.addEventListener('keydown', (evt) => {
     if (isEscEvent(evt)) {
       removePopup(popupElement);
@@ -64,13 +64,13 @@ const addPopupEscClose = function (popupElement) {
   });
 };
 
-const addPopupClickClose = function (popupElement) {
+const addPopupClickClose = (popupElement) => {
   document.addEventListener('click', () => {
     removePopup(popupElement);
   });
 };
 
-const addPopupErrorButtonClose = function (popupElement) {
+const addPopupErrorButtonClose = (popupElement) => {
   const button = popupElement.querySelector('.error__button');
   button.focus();
   button.addEventListener('keydown', () => {
@@ -78,7 +78,7 @@ const addPopupErrorButtonClose = function (popupElement) {
   });
 };
 
-const showPostPopup = function (popupElement, type = true) {
+const showPostPopup = (popupElement, type = true) => {
   document.body.appendChild(popupElement);
   addPopupEscClose(popupElement);
   addPopupClickClose(popupElement);
@@ -87,15 +87,15 @@ const showPostPopup = function (popupElement, type = true) {
   }
 };
 
-const showSuccessPostPopup = function () {
-  const succesTemplate = document.querySelector('#success').content;
-  const newSuccessPopup = succesTemplate.querySelector('.success');
+const showSuccessPostPopup = () => {
+  const successPopupTemplate = document.querySelector('#success').content;
+  const newSuccessPopup = successPopupTemplate.querySelector('.success');
   showPostPopup(newSuccessPopup, true);
 };
 
-const showErrorPostPopup = function () {
-  const errorTemplate = document.querySelector('#error').content;
-  const newErrorPopup = errorTemplate.querySelector('.error').cloneNode(true);
+const showErrorPostPopup = () => {
+  const errorPopupTemplate = document.querySelector('#error').content;
+  const newErrorPopup = errorPopupTemplate.querySelector('.error').cloneNode(true);
   showPostPopup(newErrorPopup, false);
 };
 

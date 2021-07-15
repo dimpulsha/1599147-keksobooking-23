@@ -38,7 +38,7 @@ const createRoomNumDescription = function (numRoom) {
   }
 };
 
-const createGuestsDescription = function (numGuests) {
+const createGuestsDescription = (numGuests) => {
   if (numGuests === NUM_GUESTS_UNKNOWN || numGuests >= NUM_GUESTS_MAX_LIMIT) { return ` ${TOO_MUCH_GUEST_TEXT}`; }
   const textSwich = numGuests % 10;
   switch (textSwich) {
@@ -47,7 +47,7 @@ const createGuestsDescription = function (numGuests) {
   }
 };
 
-const createFeatureList = function (featureList, elementList) {
+const createFeatureList = (featureList, elementList) => {
 
   const featureModifier = featureList.map((feature) => `popup__feature--${feature}`);
 
@@ -62,7 +62,7 @@ const createFeatureList = function (featureList, elementList) {
   });
 };
 
-const createOfferCard = function (offerItem) {
+const createOfferCard = (offerItem) => {
 
   const newPopupCard = popupCard.cloneNode(true);
   let checkinText = '';

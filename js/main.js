@@ -3,11 +3,12 @@ import { enableMap, showAlertInitOffer } from './map/map.js';
 import { loadData } from './fetch-data.js';
 import './load-image.js';
 
-const mainLoadData = function() {loadData((offersData) => {
-  enableMap(offersData);
-  changeFilter(offersData);
-},
-showAlertInitOffer);
+const mainLoadData = () => {
+  loadData((offersData) => {
+    enableMap(offersData);
+    changeFilter(offersData);
+  },
+  showAlertInitOffer);
 };
 
 mainLoadData();

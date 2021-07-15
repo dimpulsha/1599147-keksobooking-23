@@ -28,11 +28,11 @@ const advertisementFormCapacity = advertisementForm.querySelector('#capacity');
 const advertisementFormCheckin = advertisementForm.querySelector('#timein');
 const advertisementFormCheckout = advertisementForm.querySelector('#timeout');
 
-const setAddressValue = function (addressValueObject) {
+const setAddressValue = (addressValueObject) => {
   advertisementFormAddress.value = `${addressValueObject.lat.toFixed(5)}, ${addressValueObject.lng.toFixed(5)}`;
 };
 
-const checkTimeSync = function () {
+const checkTimeSync = () => {
   if (advertisementFormCheckin.value !== advertisementFormCheckout.value) {
     advertisementFormCheckin.setCustomValidity('Время заезда и время выезда не синхронизированы');
     advertisementFormCheckout.setCustomValidity('Время заезда и время выезда не синхронизированы');
@@ -43,9 +43,7 @@ const checkTimeSync = function () {
     advertisementFormCheckin.classList.remove('ad-form__select--error');
     advertisementFormCheckout.setCustomValidity('');
     advertisementFormCheckout.classList.remove('ad-form__select--error');
-    return true;
   }
-  return false;
 };
 
 advertisementForm.querySelector('#timein').addEventListener('change', () => {
@@ -58,26 +56,25 @@ advertisementForm.querySelector('#timeout').addEventListener('change', () => {
   checkTimeSync();
 });
 
-//установка минимальной стоимости price
-const setPlacePrice = function (priceRules) {
+const setPlacePrice = (priceRules) => {
   const currentPlaceType = advertisementFormPlaceType.value;
   priceInput.setAttribute('min', priceRules[currentPlaceType].MIN_PRICE);
   priceInput.setAttribute('max', priceRules[currentPlaceType].MAX_PRICE);
   priceInput.setAttribute('placeholder', priceRules[currentPlaceType].MIN_PRICE);
 };
 
-const disableAdvertisementForm = function () {
+const disableAdvertisementForm = () => {
   advertisementForm.classList.add('ad-form--disabled');
   advertisementFormElement.forEach((element) => { element.setAttribute('disabled', ''); });
 };
 
-const enableAdvertisementForm = function () {
+const enableAdvertisementForm = () => {
   setPlacePrice(getRoomPrice());
   advertisementForm.classList.remove('ad-form--disabled');
   advertisementFormElement.forEach((element) => { element.removeAttribute('disabled'); });
 };
 
-const checkTitle = function (minLength, maxLength) {
+const checkTitle = (minLength, maxLength) => {
   const valueLength = advertisementFormTitle.value.length;
   if (valueLength < minLength) {
     advertisementFormTitle.setCustomValidity(`Минимальная длина должна быть не менее ${advertisementFormTitleMinLength} знаков. \n Сейчас используется знаков: ${advertisementFormTitle.value.length} `);
@@ -91,7 +88,7 @@ const checkTitle = function (minLength, maxLength) {
   }
 };
 
-const checkPrice = function (minPrice, maxPrice) {
+const checkPrice = (minPrice, maxPrice) => {
   const valuePrice = advertisementFormPrice.value;
   if (valuePrice < Number(minPrice)) {
     advertisementFormPrice.setCustomValidity(`Цена не должна быть меньше ${minPrice}`);
@@ -106,7 +103,7 @@ const checkPrice = function (minPrice, maxPrice) {
   advertisementFormPrice.reportValidity();
 };
 
-const checkAddress = function () {
+const checkAddress = () => {
   if (advertisementFormAddress.value.length === 0) {
     advertisementFormAddress.setCustomValidity('Произошло что-то непонятное. Значение адреса не заполнено');
     advertisementFormAddress.classList.add('ad-form__input--error');
@@ -116,7 +113,7 @@ const checkAddress = function () {
   advertisementFormAddress.reportValidity();
 };
 
-const checkNumRoom = function (capacityRules) {
+const checkNumRoom = (capacityRules) => {
   let currentNumRoom = advertisementFormRoom.value;
   const currentCapacity = advertisementFormCapacity.value;
 
@@ -124,7 +121,6 @@ const checkNumRoom = function (capacityRules) {
 
   if (currentNumRoom === 'noGuest' && (currentCapacity < capacityRules[currentNumRoom].MIN || currentCapacity > capacityRules[currentNumRoom].MAX)) {
     advertisementFormRoom.setCustomValidity('Для выбранного количества комнат должно быть выбрано значение \n "Не для гостей" \n Измените количество комнат или количество гостей');
-
     advertisementFormCapacity.setCustomValidity('Для выбранного количества комнат должно быть выбрано значение \n "Не для гостей" \n Измените количество комнат или количество гостей');
 
     advertisementFormRoom.classList.add('ad-form__select--error');
@@ -132,7 +128,6 @@ const checkNumRoom = function (capacityRules) {
   }
   else if (currentNumRoom !== 'noGuest' && (currentCapacity < capacityRules[currentNumRoom].MIN || currentCapacity > capacityRules[currentNumRoom].MAX)) {
     advertisementFormRoom.setCustomValidity(`Для количества комнат ${currentNumRoom} указано неверное количество гостей \n Допустимое число гостей от "${capacityRules[currentNumRoom].MIN}" до "${capacityRules[currentNumRoom].MAX}" \n Измените количество комнат или количество гостей`);
-
     advertisementFormCapacity.setCustomValidity(`Для количества комнат ${currentNumRoom} указано неверное количество гостей \n Допустимое число гостей от "${capacityRules[currentNumRoom].MIN}" до "${capacityRules[currentNumRoom].MAX}" \n Измените количество комнат или количество гостей`);
 
     advertisementFormRoom.classList.add('ad-form__select--error');
@@ -188,20 +183,20 @@ advertisementFormPrice.addEventListener('invalid', () => {
   advertisementFormPrice.classList.add('ad-form__input--error');
 });
 
-const resetForm = function () {
+const resetForm = () => {
   advertisementForm.reset();
   setPlacePrice(getRoomPrice());
   advertisementForm.querySelector('.ad-form-header__preview img').setAttribute('src', AVATAR_SRC);
-  document.querySelectorAll('.ad-form__photo:not(:empty)').forEach((element) => { element.remove();});
+  document.querySelectorAll('.ad-form__photo:not(:empty)').forEach((element) => { element.remove(); });
 };
 
-const resetPageForm = function () {
+const resetPageForm = () => {
   resetForm();
   resetMapFilter();
   resetMainMarker();
 };
 
-const resetAlertStyle = function () {
+const resetAlertStyle = () => {
   advertisementForm.querySelectorAll('.ad-form__input--error, .ad-form__select--error')
     .forEach((element) => {
       element.classList.remove('ad-form__input--error');
@@ -209,7 +204,7 @@ const resetAlertStyle = function () {
     });
 };
 
-const successPostData = function () {
+const successPostData = () => {
   showSuccessPostPopup();
   resetPageForm();
 };

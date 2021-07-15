@@ -1,6 +1,6 @@
 const API_URL = 'https://23.javascript.pages.academy/keksobooking';
 
-const loadData = function (onSuccess, onError) {
+const loadData = (onSuccess, onError) => {
   fetch(`${API_URL}/data`)
     .then((response) => {
       if (response.ok) {
@@ -11,7 +11,7 @@ const loadData = function (onSuccess, onError) {
     .catch(() => { onError(); });
 };
 
-const postData = function (onSuccess, onError, bodyData) {
+const postData = (onSuccess, onError, bodyData) => {
   fetch(API_URL, {
     method: 'POST',
     body: bodyData,

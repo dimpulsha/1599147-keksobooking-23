@@ -13,12 +13,7 @@ const PRICE_FILTER_LIMIT = {
 
 const DEFAULT_FILTER_VALUE = 'any';
 
-const getPriceFilterLimit = function () {
-  return PRICE_FILTER_LIMIT;
-};
-
-const getDefaultFilterValue = function () {
-  return DEFAULT_FILTER_VALUE;
-};
+const getPriceFilterLimit = () => PRICE_FILTER_LIMIT;
+const getDefaultFilterValue = () => DEFAULT_FILTER_VALUE;
 
 export { getPriceFilterLimit, getDefaultFilterValue };

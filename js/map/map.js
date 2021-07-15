@@ -1,7 +1,6 @@
 import { enableAdvertisementForm, setAddressValue } from '../form.js';
 import { enableMapFilter, disableMapFilter } from '../map-filter.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
-// import { getTestData } from '../utils/create-test-data.js';
 import { createOfferCard } from '../map-offer-card.js';
 import { showAlertGetDataError } from '../popup.js';
 
@@ -29,12 +28,12 @@ const mainMapMarker = L.marker(getMapInitCenter(),
   },
 );
 
-const initMainMarker = function () {
+const initMainMarker = () => {
   mainMapMarker.addTo(map);
   setAddressValue(getMapInitCenter());
 };
 
-const resetMainMarker = function () {
+const resetMainMarker = () => {
   mainMapMarker.setLatLng(getMapInitCenter());
   setAddressValue(getMapInitCenter());
 };
@@ -45,18 +44,16 @@ mainMapMarker.on('moveend', (evt) => {
   setAddressValue(evt.target.getLatLng());
 });
 
-const createMarkerLayer = function () {
-  return L.layerGroup().addTo(map);
-};
+const createMarkerLayer = () => L.layerGroup().addTo(map);
 
 const markerLayer = createMarkerLayer();
 
-const removeMarkerPopUp = function () {
+const removeMarkerPopUp = () => {
   const popup = document.querySelector('.leaflet-popup');
-  if (popup) {popup .remove();}
+  if (popup) { popup.remove(); }
 };
 
-const createOfferMarker = function (element) {
+const createOfferMarker = (element) => {
   L.marker(element.location,
     {
       icon: markerIcon,
@@ -65,19 +62,19 @@ const createOfferMarker = function (element) {
     .bindPopup(createOfferCard(element));
 };
 
-const renderOfferMarkerList = function (dataSet) {
+const renderOfferMarkerList = (dataSet) => {
   markerLayer.clearLayers();
   dataSet
     .slice(0, MAX_OFFER)
     .forEach((dataItem) => createOfferMarker(dataItem));
 };
 
-const enableMap = function (dataSet) {
+const enableMap = (dataSet) => {
   renderOfferMarkerList(dataSet);
   enableMapFilter();
 };
 
-const showAlertInitOffer = function () {
+const showAlertInitOffer = () => {
   showAlertGetDataError();
   disableMapFilter();
 };

@@ -11,7 +11,7 @@ const mapFilterPrice = mapFilter.querySelector('#housing-price');
 const mapFilterRoom = mapFilter.querySelector('#housing-rooms');
 const mapFilterGuest = mapFilter.querySelector('#housing-guests');
 
-const disableMapFilter = function () {
+const disableMapFilter = () => {
   mapFilter.classList.add('map__filters--disabled');
   mapFilterDropDownList.forEach((element) => { element.setAttribute('disabled', ''); });
   mapFilterFeatureList.forEach((element) => { element.setAttribute('disabled', ''); });
@@ -19,19 +19,19 @@ const disableMapFilter = function () {
 
 disableMapFilter();
 
-const enableMapFilter = function () {
+const enableMapFilter = () => {
   mapFilter.classList.remove('map__filters--disabled');
   mapFilterDropDownList.forEach((element) => { element.removeAttribute('disabled'); });
   mapFilterFeatureList.forEach((element) => { element.removeAttribute('disabled'); });
 };
 
 const changeEvent = new Event('change');
-const resetMapFilter = function () {
+const resetMapFilter = () => {
   mapFilter.reset();
   mapFilter.dispatchEvent(changeEvent);
 };
 
-const checkPriceFilter = function (elementValue, filterValue) {
+const checkPriceFilter = (elementValue, filterValue) => {
   switch (filterValue) {
     case 'any': return true;
     case 'low': return elementValue < getPriceFilterLimit().LOW.MAX;
@@ -41,24 +41,18 @@ const checkPriceFilter = function (elementValue, filterValue) {
   }
 };
 
-const checkFilterItem = function (elementValue, filterValue) {
-  return (filterValue === getDefaultFilterValue() || String(filterValue) === String(elementValue));
-};
+const checkFilterItem = (elementValue, filterValue) => (filterValue === getDefaultFilterValue() || String(filterValue) === String(elementValue));
 
-const checkFiltredElement = function (element) {
-  return (
-    checkFilterItem(element.offer.type, mapFilterPlaceType.value) &&
-    checkPriceFilter(element.offer.price, mapFilterPrice.value) &&
-    checkFilterItem(element.offer.rooms, mapFilterRoom.value) &&
-    checkFilterItem(element.offer.guests, mapFilterGuest.value)
-  );
-};
+const checkFiltredElement = (element) => (
+  checkFilterItem(element.offer.type, mapFilterPlaceType.value) &&
+  checkPriceFilter(element.offer.price, mapFilterPrice.value) &&
+  checkFilterItem(element.offer.rooms, mapFilterRoom.value) &&
+  checkFilterItem(element.offer.guests, mapFilterGuest.value)
+);
 
-const filterPlaceType = function (dataSet) {
-  return dataSet.filter(checkFiltredElement);
-};
+const filterPlaceType = (dataSet) => dataSet.filter(checkFiltredElement);
 
-const getFeaturesRank = function (element) {
+const getFeaturesRank = (element) => {
   const selectedFeatures = mapFilter.querySelectorAll('.map__checkbox:checked');
   let placeFeatureRank = 0;
 
@@ -80,7 +74,7 @@ const compareOfferRank = function (offerA, offerB) {
 
 const debounceRenderMarker = debounce((dataSet) => { renderOfferMarkerList(filterPlaceType(dataSet).sort(compareOfferRank)); });
 
-const changeFilter = function (dataSet) {
+const changeFilter = (dataSet) => {
   mapFilter.addEventListener('change', () => {
     removeMarkerPopUp();
     debounceRenderMarker(dataSet);

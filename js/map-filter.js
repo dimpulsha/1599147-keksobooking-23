@@ -1,4 +1,4 @@
-import { removeMarkerPopUp, renderOfferMarkerList } from './map/map.js';
+import { removeMarkerPopUp, renderOfferMarkerList } from './map.js';
 import { getPriceFilterLimit, getDefaultFilterValue } from './filter-object-settings.js';
 import { debounce } from './utils/utils-function.js';
 

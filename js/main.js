@@ -1,5 +1,5 @@
 import { changeFilter } from './map-filter.js';
-import { enableMap, showAlertInitOffer } from './map/map.js';
+import { enableMap, showAlertInitOffer } from './map.js';
 import { loadData } from './fetch-data.js';
 import './load-image.js';
 

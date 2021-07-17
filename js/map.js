@@ -1,8 +1,8 @@
-import { enableAdvertisementForm, setAddressValue } from '../form.js';
-import { enableMapFilter, disableMapFilter } from '../map-filter.js';
+import { enableAdvertisementForm, setAddressValue } from './form.js';
+import { enableMapFilter, disableMapFilter } from './map-filter.js';
 import { getMapId, getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-settings.js';
-import { createOfferCard } from '../map-offer-card.js';
-import { showAlertGetDataError } from '../popup.js';
+import { createOfferCard } from './map-offer-card.js';
+import { showAlertGetDataError } from './popup.js';
 
 const MAX_OFFER = 10;
 

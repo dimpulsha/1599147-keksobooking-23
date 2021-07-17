@@ -2,7 +2,7 @@ import { getRoomCapacity, getNoGuestLimit, getRoomPrice } from './form-object-se
 import { postData } from './fetch-data.js';
 import { showSuccessPostPopup, showErrorPostPopup } from './popup.js';
 import { resetMapFilter } from './map-filter.js';
-import { resetMainMarker } from './map/map.js';
+import { resetMainMarker } from './map.js';
 
 const AVATAR_SRC = 'img/muffin-grey.svg';
 

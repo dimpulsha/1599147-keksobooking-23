@@ -18,7 +18,7 @@ const MAP_MAIN_ICON = {
 };
 
 const MAP_ICON = {
-  iconUrl: '1599147-keksobooking-23/img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 };
